@@ -5,8 +5,8 @@ export const LoginForm = styled.div`
   padding: 10%;
   border-radius: 15px;
 
-  .toast-message {
-    font-size: 16px;
+  .toast-error {
+    font-size: 15px;
     color: #ff0000;
 
     svg {
@@ -18,6 +18,21 @@ export const LoginForm = styled.div`
       opacity: 1;
     }
   }
+
+  .toast-success {
+    font-size: 15px;
+    color: #008000;
+
+    svg {
+      filter: inherit;
+    }
+
+    button {
+      color: #008000;
+      opacity: 1;
+    }
+  }
+
 `;
 
 export const InputFieldWrapper = styled.div`

@@ -18,41 +18,43 @@ const Home = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const { error } = handleErrors();
-    if (error) {
-      toast.error(error.password, {
+    const errors = handleErrors();
+
+    if (errors.password) {
+      toast.error(errors.password, {
         position: toast.POSITION.TOP_RIGHT,
-        className: "toast-message",
+        className: "toast-error",
       });
       setIsLogin(false);
     } else {
       setIsLogin(true);
-      console.log("login");
-      toast.success("User Login Successfully.");
+      toast.success("User Login Successfully.", {
+        position: toast.POSITION.TOP_RIGHT,
+        className: "toast-success",
+      });
     }
-    console.log("errorerrorerror", error);
   };
 
   const handleErrors = () => {
     const { username, password } = loginData;
     let errors = {};
-
-    // Validate username
-    if (!username) {
-      errors.username = "Username is required";
-    }
-
-    // Validate password
-    if (!password) {
-      errors.password = "Password is required";
-    } else if (password.length < 6 || password.length > 12) {
-      errors.password = "Password must be between 6 and 12 characters long";
-    } else {
-      const passwordRegex =
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,12}$/;
-      if (!passwordRegex.test(password)) {
-        errors.password =
-          "Password must contain at least one uppercase letter, one lowercase letter, one special character, and one numeric value";
+    if (username && password) {
+      // Validate username
+      if (!username) {
+        errors.username = "Username is required";
+      }
+      // Validate password
+      if (!password) {
+        errors.password = "Password is required";
+      } else if (password.length < 6 || password.length > 12) {
+        errors.password = "Password must be between 6 and 12 characters long";
+      } else {
+        const passwordRegex =
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,12}$/;
+        if (!passwordRegex.test(password)) {
+          errors.password =
+            "Password must contain at least one uppercase letter, one lowercase letter, one special character, and one numeric value";
+        }
       }
     }
 
@@ -85,14 +87,14 @@ const Home = () => {
       });
     }
   }, []);
- 
+
   return (
     <div>
       <h2>Weather App</h2>
       <LoginForm>
         <h2>Login</h2>
         <h5>Please enter your Login and your password</h5>
-        <form onSubmit={!isLogin && handleSubmit}>
+        <form onSubmit={(e) => !isLogin && handleSubmit(e)}>
           {formFields.map((field) => {
             const { name, placeholder, type } = field;
             return (
@@ -106,7 +108,6 @@ const Home = () => {
                   onChange={(e) =>
                     setLoginData({ ...loginData, [name]: e.target.value })
                   }
-                  error={handleErrors}
                 />
               </InputFieldWrapper>
             );
@@ -119,8 +120,8 @@ const Home = () => {
             </Button>
           )}
         </form>
+        <ToastContainer/>
       </LoginForm>
-      <ToastContainer />
     </div>
   );
 };
