@@ -4,13 +4,13 @@ import WeatherContext from "../../contexts/WeatherContext";
 import { fetchFilteredData } from "../../contexts/WeatherService";
 import { ActionButton, TableWrapper } from "./listPage.styles";
 import { Title } from "../Dashboard/dashboard.styles";
-import { useNavigate } from "react-router-dom";
 
 const ListPage = () => {
   const { userData, setUserData } = useContext(WeatherContext);
   const cities = userData.cities;
 
   const handleCardDisable = (city) => {
+
     const { name } = city;
 
     const index = cities.findIndex((city) => city.name === name);
@@ -24,13 +24,13 @@ const ListPage = () => {
       enable: !newCities[index].enable,
     };
 
-    setUserData({ ...userData, cities: [newCities] });
+    setUserData({ ...userData, cities: newCities });
   };
 
   return (
     <>
       <Header currentPage="list" />
-      <Title>Cites Weather Data</Title>
+      <Title>Cities Weather Data</Title>
       <TableWrapper>
         <table>
           <thead>

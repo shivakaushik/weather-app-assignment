@@ -35,14 +35,14 @@ const WeatherCard = ({ city }) => {
     if (cityWeather) {
       setLocation(cityWeather.location);
     }
-  }, []);
+  }, [cityWeather]);
 
   return (
     cityWeather && (
       <Card>
         {location && (
           <p>
-            {location.name || name + ", " + location.region + ", " + location.country}
+            {(location.name || name) + ", " + location.region + ", " + location.country}
           </p>
         )}
         <Wrap>
